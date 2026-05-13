@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "Gatik Alagh", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "22BAI71137 Gatik 1.pdf", "label": "22BAI71137 Gatik 1.pdf", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Professional Summary", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "C++", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "HTML", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "CSS", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "JavaScript", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Node.js", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Express.js", "label": "GPE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Data\nStructures", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Leadership, Creativity", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Problem Solving", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Analytical Thinking", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Postman", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "JWT", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Nodemailer", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "MVC", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Integrated Nodemailer", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "API", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Bank Fraud Detection Using Machine Learning", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Machine Learning", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Kaggle", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "280,000", "label": "CARDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "99%", "label": "PERCENT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Shortener", "label": "GPE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "CRUD", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Spotify Clone", "label": "LOC", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Spotify", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "UI", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "500+", "label": "CARDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "GFG", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "CodeStudio", "label": "PRODUCT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "LeetCode", "label": "PRODUCT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "40+", "label": "DATE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "DSA", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Non-Medical", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Baba Ram Das Vidypeeth", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "88.4%", "label": "PERCENT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "B.E.", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Computer Science \u2013 AI \u0026 ML 2022", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Chandigarh University Current CGPA", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "8.37 / 10", "label": "CARDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Microsoft", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Coursera", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "July 31, 2024", "label": "DATE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Safire", "label": "GPE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Research work (1).pdf", "label": "Research work (1).pdf", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Diff", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "2", "label": "CARDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "OCR", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PROD", "label": "WORK_OF_ART", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Datalab", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "90", "label": "CARDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "sec", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "DeepSeek-OCR", "label": "PRODUCT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "LLM", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "2500", "label": "CARDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "5", "label": "CARDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Chandra DeepSeek-OCR", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Handwriting Speed", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "90+ \nlanguages", "label": "DATE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "tokens/sec", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "second", "label": "ORDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "deepseek-OCR", "label": "LAW", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Chandra", "label": "GPE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PDF", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PageIndex", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Deepseek-OCR", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Specialist Workers", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Two", "label": "CARDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "1", "label": "CARDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Chandra 2\n ", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Enginee", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "millions", "label": "CARDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Vectorless RAG", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Page", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "100", "label": "CARDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "RAG", "label": "GPE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "98.7%", "label": "PERCENT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Markdown", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "JSON", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "the \"Garbage In", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Semantic Tree", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Smart Table of Contents", "label": "WORK_OF_ART", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "AI", "label": "GPE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Check", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "The Open Session", "label": "WORK_OF_ART", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "KARIMO", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "10\u201315", "label": "CARDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "KB", "label": "ORG", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "Gatik Alagh", "to": "22BAI71137 Gatik 1.pdf", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Professional Summary", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "C++", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "HTML", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "CSS", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "JavaScript", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Node.js", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Express.js", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Data\nStructures", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Leadership, Creativity", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Problem Solving", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Analytical Thinking", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Postman", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "JWT", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Nodemailer", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "MVC", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Integrated Nodemailer", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "API", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Bank Fraud Detection Using Machine Learning", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Machine Learning", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Kaggle", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "280,000", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "99%", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Shortener", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "CRUD", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Spotify Clone", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Spotify", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "UI", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "500+", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "GFG", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "CodeStudio", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "LeetCode", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "40+", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "DSA", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Non-Medical", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Baba Ram Das Vidypeeth", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "88.4%", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "B.E.", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Computer Science \u2013 AI \u0026 ML 2022", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Chandigarh University Current CGPA", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "8.37 / 10", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Microsoft", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "Coursera", "width": 1}, {"from": "22BAI71137 Gatik 1.pdf", "to": "July 31, 2024", "width": 1}, {"from": "Safire", "to": "Research work (1).pdf", "width": 1}, {"from": "Research work (1).pdf", "to": "Diff", "width": 1}, {"from": "Research work (1).pdf", "to": "2", "width": 1}, {"from": "Research work (1).pdf", "to": "OCR", "width": 1}, {"from": "Research work (1).pdf", "to": "PROD", "width": 1}, {"from": "Research work (1).pdf", "to": "Datalab", "width": 1}, {"from": "Research work (1).pdf", "to": "90", "width": 1}, {"from": "Research work (1).pdf", "to": "sec", "width": 1}, {"from": "Research work (1).pdf", "to": "DeepSeek-OCR", "width": 1}, {"from": "Research work (1).pdf", "to": "LLM", "width": 1}, {"from": "Research work (1).pdf", "to": "2500", "width": 1}, {"from": "Research work (1).pdf", "to": "5", "width": 1}, {"from": "Research work (1).pdf", "to": "Chandra DeepSeek-OCR", "width": 1}, {"from": "Research work (1).pdf", "to": "Handwriting Speed", "width": 1}, {"from": "Research work (1).pdf", "to": "90+ \nlanguages", "width": 1}, {"from": "Research work (1).pdf", "to": "tokens/sec", "width": 1}, {"from": "Research work (1).pdf", "to": "second", "width": 1}, {"from": "Research work (1).pdf", "to": "deepseek-OCR", "width": 1}, {"from": "Research work (1).pdf", "to": "Chandra", "width": 1}, {"from": "Research work (1).pdf", "to": "PDF", "width": 1}, {"from": "Research work (1).pdf", "to": "PageIndex", "width": 1}, {"from": "Research work (1).pdf", "to": "Deepseek-OCR", "width": 1}, {"from": "Research work (1).pdf", "to": "Specialist Workers", "width": 1}, {"from": "Research work (1).pdf", "to": "Two", "width": 1}, {"from": "Research work (1).pdf", "to": "1", "width": 1}, {"from": "Research work (1).pdf", "to": "Chandra 2\n ", "width": 1}, {"from": "Research work (1).pdf", "to": "Enginee", "width": 1}, {"from": "Research work (1).pdf", "to": "millions", "width": 1}, {"from": "Research work (1).pdf", "to": "Vectorless RAG", "width": 1}, {"from": "Research work (1).pdf", "to": "Page", "width": 1}, {"from": "Research work (1).pdf", "to": "100", "width": 1}, {"from": "Research work (1).pdf", "to": "RAG", "width": 1}, {"from": "Research work (1).pdf", "to": "98.7%", "width": 1}, {"from": "Research work (1).pdf", "to": "Markdown", "width": 1}, {"from": "Research work (1).pdf", "to": "JSON", "width": 1}, {"from": "Research work (1).pdf", "to": "the \"Garbage In", "width": 1}, {"from": "Research work (1).pdf", "to": "Semantic Tree", "width": 1}, {"from": "Research work (1).pdf", "to": "Smart Table of Contents", "width": 1}, {"from": "Research work (1).pdf", "to": "AI", "width": 1}, {"from": "Research work (1).pdf", "to": "Check", "width": 1}, {"from": "Research work (1).pdf", "to": "The Open Session", "width": 1}, {"from": "Research work (1).pdf", "to": "KARIMO", "width": 1}, {"from": "Research work (1).pdf", "to": "10\u201315", "width": 1}, {"from": "Research work (1).pdf", "to": "KB", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
